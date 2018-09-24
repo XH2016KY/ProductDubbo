@@ -22,3 +22,6 @@ create table `prodcut_category` (
    PRIMARY key(product_category_id),
    unique(product_category_name)
 )ENGINE=INNODB charset=utf8 COMMENT '商品类目表';
+
+
+
