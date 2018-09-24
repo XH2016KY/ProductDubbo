@@ -12,3 +12,13 @@ create Table `product`(
    PRIMARY key(product_id),
    unique(product_name)
 )ENGINE=INNODB CHARSET=UTF8 COMMENT'商品表';
+
+-- 商品类目表 --
+create table `prodcut_category` (
+   product_category_id INT COMMENT '商品类目',
+   product_category_name varchar(100) COMMENT '商品类目名称',
+   create_time datetime COMMENT '创建时间',
+   update_time datetime COMMENT '更新时间',
+   PRIMARY key(product_category_id),
+   unique(product_category_name)
+)ENGINE=INNODB charset=utf8 COMMENT '商品类目表';
