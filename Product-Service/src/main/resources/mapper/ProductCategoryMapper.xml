@@ -13,7 +13,38 @@
 			jdbcType="TIMESTAMP" />
 	</resultMap>
 
-	<!-- <select id="findById" resultMap="BaseResultMap">
-		select *from product_category where product_category_id = #{id}
-	</select> -->
+	<!-- <select id="findById" resultMap="BaseResultMap"> select *from product_category 
+		where product_category_id = #{id} </select> -->
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from product_category
+	</select>
+
+	<insert id="save">
+		insert into product_category (
+		product_category_name,
+		create_time,update_time
+		) values
+		<foreach collection="categoryList" item="productCategory"
+			index="index" separator=",">
+			(
+			#{productCategory.productCategoryName},
+			#{productCategory.createTime},
+			#{productCategory.updateTime}
+			)
+		</foreach>
+	</insert>
+	
+	<update id="update" >
+		update product_category
+		<set>
+			<if test="productCategory.productCategoryName != null">product_category_name =
+				#{productCategory.productCategoryName},</if>
+			<if test="productCategory.createTime != null">create_time = #{productCategory.createTime},</if>
+			<if test="productCategory.updateTime != null">update_time =#{productCategory.updateTime}</if>
+		</set>
+		<where>
+			product_category_id = #{productCategory.productCategoryId}
+		</where>
+	</update>
 </mapper>

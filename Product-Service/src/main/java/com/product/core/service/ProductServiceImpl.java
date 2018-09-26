@@ -3,13 +3,17 @@ package com.product.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.dubbo.config.annotation.Service;
 import com.product.core.api.ProductApi;
 import com.product.core.mapper.ProductMapper;
 import com.product.core.pojo.Product;
 import com.product.core.pojo.ProductCategory;
 
-@Service("productServiceImpl")
+@Component("productServiceImpl")
+@Service
 public class ProductServiceImpl implements ProductApi{
 	
 	@Autowired
@@ -33,12 +37,14 @@ public class ProductServiceImpl implements ProductApi{
 		return productMapper.findById(id);
 	}
 
+	@Transactional
 	@Override
 	public boolean save(List<Product> productList) {
 		
 		return productMapper.save(productList);
 	}
-
+    
+	@Transactional
 	@Override
 	public boolean update(Product product) {
 		

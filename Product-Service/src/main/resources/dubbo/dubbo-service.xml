@@ -26,7 +26,9 @@
 	<dubbo:registry address="192.168.200.151:2181,192.168.200.153:2181,192.168.200.150:2181" protocol="zookeeper"/>
 	<!-- 3.设置端口号 -->
 	<dubbo:protocol port="20882" name="dubbo"/>
-	<!-- 4.用户服务接口api -->
+	<!-- 4.商品服务接口api -->
 	<dubbo:service interface="com.product.core.api.ProductApi" ref="productServiceImpl"/>
+	<!-- 5.商品类别服务接口api -->
+	<dubbo:service interface="com.product.core.api.ProductCategoryApi" ref="productCategoryServiceImpl"/>
 	
 </beans>
