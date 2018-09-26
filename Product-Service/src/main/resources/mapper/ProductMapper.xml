@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.product.core.mapper.ProductMapper">
+	<resultMap id="BaseResultMap"
+		type="com.product.core.pojo.Product">
+		<id column="product_id" property="productId" jdbcType="BIGINT" />
+		<result column="product_name" property="productName"
+			jdbcType="VARCHAR" />
+		<result column="product_category_id"
+			property="productCategoryId" jdbcType="BIGINT" />
+		<result column="product_img" property="productImg"
+			jdbcType="VARCHAR" />
+		<result column="product_stock" property="productStock"
+			jdbcType="INTEGER" />
+		<result column="product_status" property="productStatus"
+			jdbcType="TINYINT" />
+		<result column="product_price" property="productPrice"
+			jdbcType="DECIMAL" />
+		<result column="create_time" property="createTime"
+			jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap type="com.product.core.pojo.Product" id="GGG">
+		<result column="product_name" property="productName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findById" resultMap="BaseResultMap">
+		select * from product
+		where product_id = #{id}
+	</select>
+
+	<select id="findByCategory" resultMap="BaseResultMap">
+		SELECT * from product p
+		left join product_category c
+		on p.product_category_id = c.product_category_id
+		where c.product_category_id = #{category.productCategoryId}
+	</select>
+
+	<insert id="save">
+		insert into product (product_name,product_category_id,
+		product_price,product_img,product_status,product_stock,create_time,update_time)
+		values
+		<foreach collection="productList" item="product" index="index"
+			separator=",">
+			(
+			#{product.productName},#{product.productCategoryId},#{product.productPrice},
+			#{product.productImg},#{product.productStatus},#{product.productStock},#{product.createTime},
+			#{product.updateTime}
+			)
+		</foreach>
+
+	</insert>
+	<update id="update">
+		update  product
+		<set>
+			<if test="product.productName != null">product_name=#{product.productName},</if>
+            <if test="product.productCategoryId != null">product_category_id=#{product.productCategoryId},</if>
+            <if test="product.productPrice != null">product_price=#{product.productPrice},</if>
+            <if test="product.productImg != null">product_img=#{product.productImg},</if>
+            <if test="product.productStatus != null">product_status=#{product.productStatus},</if>
+            <if test="product.productStock != null">product_stock=#{product.productStock},</if>
+            <if test="product.createTime != null">create_time=#{product.createTime},</if>
+            <if test="product.updateTime !=null">update_time=#{product.updateTime}</if>
+		</set>
+		     where product_id = #{product.productId}
+
+	</update>
+</mapper>
