@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.product.core.api.ProductCategoryApi;
 import com.product.core.mapper.ProductCategoryMapper;
+import com.product.core.message.MessageSender;
 import com.product.core.pojo.ProductCategory;
 
 @Service("productCategoryServiceImpl")
@@ -15,6 +16,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryApi{
 
 	@Autowired
 	private ProductCategoryMapper productCategoryMapper;
+	
+	@Autowired
+	private MessageSender messageSender;
 	
 	@Override
 	public ProductCategory findById(Integer id) {
@@ -30,9 +34,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryApi{
 
 	@Transactional
 	@Override
-	public boolean save(List<ProductCategory> categoryList) {
-	   
-		return this.productCategoryMapper.save(categoryList);
+	public boolean save(List<ProductCategory> categoryList) {  
+		try {
+			productCategoryMapper.save(categoryList);
+			messageSender.send(categoryList);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO 将添加到Elastic的数据删除
+			return false;
+		}
+	    	
+		
 	}
 
 	@Transactional

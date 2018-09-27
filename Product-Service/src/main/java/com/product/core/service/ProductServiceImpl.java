@@ -3,17 +3,14 @@ package com.product.core.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.alibaba.dubbo.config.annotation.Service;
 import com.product.core.api.ProductApi;
 import com.product.core.mapper.ProductMapper;
 import com.product.core.pojo.Product;
 import com.product.core.pojo.ProductCategory;
 
-@Component("productServiceImpl")
-@Service
+@Service("productServiceImpl")
 public class ProductServiceImpl implements ProductApi{
 	
 	@Autowired
