@@ -11,11 +11,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 
+ * <h1>商品类型实体</h1>
+ * 
+ * @author happy everyday
+ * 2018年9月28日
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class ProductCategory implements Serializable {
+	
     /**
      * 商品类目
      */

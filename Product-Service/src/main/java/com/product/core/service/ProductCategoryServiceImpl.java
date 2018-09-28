@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.product.core.api.ProductCategoryApi;
 import com.product.core.mapper.ProductCategoryMapper;
 import com.product.core.message.MessageSender;
@@ -31,17 +30,26 @@ public class ProductCategoryServiceImpl implements ProductCategoryApi{
 	
 		return this.productCategoryMapper.findAll();
 	}
-
+   
+	/**
+	 *  数据库添加成功时
+	 *  数据同步到ElasticSearch
+	 */
 	@Transactional
 	@Override
 	public boolean save(List<ProductCategory> categoryList) {  
+		
+		Boolean ok = null; 
 		try {
-			productCategoryMapper.save(categoryList);
-			messageSender.send(categoryList);
+			// 数据库操作
+			ok = productCategoryMapper.save(categoryList);
+			if(ok == true) {
+				// TODO 数据一致性 || 注意指令重排
+				messageSender.send(categoryList);
+			 }
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO 将添加到Elastic的数据删除
 			return false;
 		}
 	    	
